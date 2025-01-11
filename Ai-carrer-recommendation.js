@@ -1,5 +1,4 @@
 const API_KEY = 'AIzaSyAqnedwm6RPYv0OO4Q5FBNDDCIyHWmfyJU';
-
 document.getElementById('career-form').addEventListener('submit', async function (event) {
     event.preventDefault();
 
@@ -43,7 +42,13 @@ document.getElementById('career-form').addEventListener('submit', async function
 
             // Check if the response contains career recommendations
             if (data.candidates && data.candidates.length > 0) {
-                const recommendationText = data.candidates[0].content.parts[0].text || 'No content available';
+                // Extract the recommendation text
+                let recommendationText = data.candidates[0].content.parts[0].text || 'No content available';
+
+                
+                recommendationText = recommendationText.replace(/\*/g, ''); // Remove stars
+
+                // Display the sanitized recommendation text
                 document.getElementById('recommendation-text').textContent = recommendationText;
             } else {
                 document.getElementById('recommendation-text').textContent = 'No recommendations available at this time.';
